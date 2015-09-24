@@ -41,7 +41,7 @@ track.events << Controller.new(0, CC_VOLUME, 127)
 track.events << ProgramChange.new(0, 1, 0)
 quarter_note_length = seq.note_to_delta('quarter')
 
-File.open('numbers').each do |offset|
+File.open('output').each do |offset|
   offset = offset.to_i
   track.events << NoteOn.new(0, offset, 127, 0)
   track.events << NoteOff.new(0, offset, 127, quarter_note_length)

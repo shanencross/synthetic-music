@@ -1,0 +1,7 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "dependencies": {
+    "brain": "^0.7.0"
+  }
+}

@@ -1,1 +1,3 @@
 *.SF2
+iterations/
+node_modules/
