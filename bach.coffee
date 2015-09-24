@@ -2,8 +2,11 @@ brain = require 'brain'
 fs = require 'fs'
 readline = require 'readline'
 
+defaultVector = ->
+	(null for [0...100])
+
 vectors = []
-prevVector = (null for [0...100])
+prevVector = defaultVector()
 
 defuzz = (vector) ->
 	vectorSum = vector.reduce (a, b) -> a + b
@@ -16,7 +19,7 @@ defuzz = (vector) ->
 			break
 
 generate = (net) ->
-	prevVector = (null for [0...100])
+	prevVector = defaultVector()
 	for i in [1..100] by 1
 		output = net.run(prevVector)
 		defuzz(output)
@@ -25,9 +28,10 @@ generate = (net) ->
 train = ->
 	net = new brain.NeuralNetwork()
 
-	net.train vectors,
+	stat = net.train vectors,
 		errorThresh: 0.0085
 
+	console.warn(stat)
 	generate(net)
 
 
@@ -39,7 +43,7 @@ fileReader.on 'line', (line) ->
 	noteNumber = parseInt line, 10
 	return if not noteNumber
 
-	vector = (0 for [0...100])
+	vector = defaultVector()
 	vector[noteNumber] = 1
 	vectors.push
 		input: prevVector
