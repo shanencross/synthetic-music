@@ -24,14 +24,10 @@ class History
     (null for [0...100])
 
 defuzz = (vector) ->
-  vectorSum = vector.reduce (a, b) -> a + b
-  rand = Math.random() * vectorSum
-  cumulative = 0
   defuzzed = (0 for [0...100])
 
-  for interval, index in vector
-    cumulative = cumulative + interval
-    if rand < cumulative
+  for probability, index in vector
+    if probability < 0.5
       console.log index
       defuzzed[index] = 1
       break

@@ -50,12 +50,7 @@
   })();
 
   defuzz = function(vector) {
-    var cumulative, defuzzed, index, interval, j, len, rand, vectorSum;
-    vectorSum = vector.reduce(function(a, b) {
-      return a + b;
-    });
-    rand = Math.random() * vectorSum;
-    cumulative = 0;
+    var defuzzed, index, j, len, probability;
     defuzzed = (function() {
       var j, results;
       results = [];
@@ -65,9 +60,8 @@
       return results;
     })();
     for (index = j = 0, len = vector.length; j < len; index = ++j) {
-      interval = vector[index];
-      cumulative = cumulative + interval;
-      if (rand < cumulative) {
+      probability = vector[index];
+      if (probability < 0.5) {
         console.log(index);
         defuzzed[index] = 1;
         break;
@@ -92,7 +86,7 @@
     var net, stat;
     net = new brain.NeuralNetwork();
     stat = net.train(vectors, {
-      errorThresh: 0.0085
+      errorThresh: 0.005
     });
     console.warn(stat);
     return generate(net);
